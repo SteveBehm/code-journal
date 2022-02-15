@@ -23,4 +23,5 @@ function handleSubmit(event) {
   formObj.photoAddress = photoAddress;
   formObj.notes = notes;
   formObj.nextEntryId = data.nextEntryId;
+  data.nextEntryId++;
 }
