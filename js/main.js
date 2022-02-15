@@ -27,3 +27,39 @@ function handleSubmit(event) {
   $image.setAttribute('src', 'images/placeholder-image-square.jpg');
   $form.reset();
 }
+
+function newEntry(entry) {
+  var newListItem = document.createElement('li');
+  newListItem.className = 'row';
+
+  var imgDiv = document.createElement('div');
+  imgDiv.className = 'column-half';
+  newListItem.appendChild(imgDiv);
+
+  var imgElement = document.createElement('img');
+  imgElement.setAttribute('src', entry.photoAddress);
+  imgDiv.appendChild(imgElement);
+
+  var textHalf = document.createElement('div');
+  textHalf.className = 'column-half';
+  newListItem.appendChild(textHalf);
+
+  var entryTitle = document.createElement('h2');
+  var entryTitleText = document.createTextNode(entry.title);
+  entryTitle.appendChild(entryTitleText);
+  textHalf.appendChild(entryTitle);
+
+  var firstPara = document.createElement('p');
+  var firstParaText = document.createTextNode(entry.notes);
+  firstPara.appendChild(firstParaText);
+  textHalf.appendChild(firstPara);
+
+  return newListItem;
+}
+
+var $unorderedList = document.querySelector('ul');
+
+for (var i = 0; i < data.entries.length; i++) {
+  var $entries = newEntry(data.entries[i]);
+  $unorderedList.appendChild($entries);
+}
