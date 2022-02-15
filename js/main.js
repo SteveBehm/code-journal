@@ -21,10 +21,9 @@ function handleSubmit(event) {
   formObj.title = title;
   formObj.photoAddress = photoAddress;
   formObj.notes = notes;
-  formObj.nextEntryId = data.nextEntryId;
+  formObj.entryId = data.nextEntryId;
   data.nextEntryId++;
   data.entries.unshift(formObj);
   $image.setAttribute('src', 'images/placeholder-image-square.jpg');
-  title.textContent = '';
   $form.reset();
 }
