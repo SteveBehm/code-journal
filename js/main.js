@@ -5,9 +5,8 @@ var $image = document.querySelector('img');
 $photoInput.addEventListener('input', handlePhotoInput);
 
 function handlePhotoInput(event) {
-  if ($photoInput.value !== '') {
-    $image.setAttribute('src', $photoInput.value);
-  }
+  $image.setAttribute('src', $photoInput.value);
+
 }
 
 var $form = document.querySelector('form');
