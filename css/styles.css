@@ -59,3 +59,17 @@ ul {
   padding: 0;
   margin: 0;
 }
+
+.entries {
+  display: flex;
+  align-items: center;
+}
+
+.new-button {
+  background-color: rgb(86 43 128);
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  padding: 6px 18px;
+  font-size: 14px;
+}
