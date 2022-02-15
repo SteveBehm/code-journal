@@ -9,3 +9,18 @@ function handlePhotoInput(event) {
     $image.setAttribute('src', $photoInput.value);
   }
 }
+
+var $form = document.querySelector('form');
+$form.addEventListener('submit', handleSubmit);
+
+function handleSubmit(event) {
+  event.preventDefault();
+  var formObj = {};
+  var title = $form.elements.title.value;
+  var photoAddress = $form.elements.url.value;
+  var notes = $form.elements.notes.value;
+  formObj.title = title;
+  formObj.photoAddress = photoAddress;
+  formObj.notes = notes;
+  formObj.nextEntryId = data.nextEntryId;
+}
