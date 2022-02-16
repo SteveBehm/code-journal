@@ -6,7 +6,6 @@ $photoInput.addEventListener('input', handlePhotoInput);
 
 function handlePhotoInput(event) {
   $image.setAttribute('src', $photoInput.value);
-
 }
 
 var $entriesNav = document.querySelector('.nav-entries');
@@ -58,6 +57,9 @@ function handleSubmit(event) {
   var $entriesList = document.querySelector('.entries-list');
   $entriesList.className = 'entries-list container';
   data.view = 'entries';
+
+  var $noEntries = document.querySelector('.no-entries-para');
+  $noEntries.className = 'no-entries-para hidden';
 }
 
 function newEntry(entry) {
@@ -107,6 +109,11 @@ function handleRefresh(event) {
     $newEntryDiv.className = 'container new-entry';
     $entriesList.className = 'entries-list container hidden';
     data.view = 'entry-form';
+  }
+
+  if (data.entries.length > 0) {
+    var $noEntries = document.querySelector('.no-entries-para');
+    $noEntries.className = 'no-entries-para hidden';
   }
 }
 window.addEventListener('DOMContentLoaded', handleRefresh);

@@ -84,3 +84,8 @@ ul {
   text-decoration: none;
   padding-left: 1rem;
 }
+
+.no-entries {
+  display: flex;
+  justify-content: center;
+}
