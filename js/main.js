@@ -65,6 +65,7 @@ function handleSubmit(event) {
 function newEntry(entry) {
   var newListItem = document.createElement('li');
   newListItem.className = 'row';
+  newListItem.setAttribute('data-entry-id', entry.entryId);
 
   var imgDiv = document.createElement('div');
   imgDiv.className = 'column-half';
