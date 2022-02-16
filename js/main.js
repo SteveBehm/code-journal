@@ -126,3 +126,12 @@ function handleRefresh(event) {
   }
 }
 window.addEventListener('DOMContentLoaded', handleRefresh);
+
+function handleEditClick(event) {
+  // console.log('event.target', event.target);
+  // console.log('event.target.tagName', event.target.tagName);
+  // if (event.target && event.target.nodeName === 'I') {
+
+  // }
+}
+$unorderedList.addEventListener('click', handleEditClick);
