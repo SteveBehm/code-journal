@@ -89,3 +89,10 @@ ul {
   display: flex;
   justify-content: center;
 }
+
+.edit-icon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

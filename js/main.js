@@ -78,10 +78,18 @@ function newEntry(entry) {
   textHalf.className = 'column-half';
   newListItem.appendChild(textHalf);
 
+  var iconDiv = document.createElement('div');
+  iconDiv.className = 'edit-icon';
+  textHalf.appendChild(iconDiv);
+
   var entryTitle = document.createElement('h2');
   var entryTitleText = document.createTextNode(entry.title);
   entryTitle.appendChild(entryTitleText);
-  textHalf.appendChild(entryTitle);
+  iconDiv.appendChild(entryTitle);
+
+  var icon = document.createElement('i');
+  icon.className = 'fas fa-pencil-alt';
+  iconDiv.appendChild(icon);
 
   var firstPara = document.createElement('p');
   var firstParaText = document.createTextNode(entry.notes);
