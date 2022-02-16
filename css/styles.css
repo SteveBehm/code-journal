@@ -73,3 +73,14 @@ ul {
   padding: 6px 19px;
   font-size: 14px;
 }
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+}
+
+.nav-entries {
+  color: white;
+  text-decoration: none;
+  padding-left: 1rem;
+}

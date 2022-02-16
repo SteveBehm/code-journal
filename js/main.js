@@ -9,25 +9,48 @@ function handlePhotoInput(event) {
 
 }
 
+var $entriesNav = document.querySelector('.nav-entries');
+$entriesNav.addEventListener('click', handleEntriesNavClick);
+function handleEntriesNavClick(event) {
+  var $newEntryDiv = document.querySelector('.new-entry');
+  $newEntryDiv.className = 'container new-entry hidden';
+  var $entriesList = document.querySelector('.entries-list');
+  $entriesList.className = 'entries-list container';
+}
+
+var $newButton = document.querySelector('.new-button');
+$newButton.addEventListener('click', handleNewClick);
+function handleNewClick(event) {
+  var $newEntryDiv = document.querySelector('.new-entry');
+  $newEntryDiv.className = 'container new-entry';
+  var $entriesList = document.querySelector('.entries-list');
+  $entriesList.className = 'entries-list container hidden';
+}
+
 var $form = document.querySelector('form');
 $form.addEventListener('submit', handleSubmit);
 
 function handleSubmit(event) {
   event.preventDefault();
   var formObj = {};
+
   var title = $form.elements.title.value;
   var photoAddress = $form.elements.url.value;
   var notes = $form.elements.notes.value;
+
   formObj.title = title;
   formObj.photoAddress = photoAddress;
   formObj.notes = notes;
   formObj.entryId = data.nextEntryId;
+
   data.nextEntryId++;
   data.entries.unshift(formObj);
   $image.setAttribute('src', 'images/placeholder-image-square.jpg');
   $form.reset();
+
   var $entry = newEntry(formObj);
-  $unorderedList.appendChild($entry);
+  $unorderedList.prepend($entry);
+
   var $newEntryDiv = document.querySelector('.new-entry');
   $newEntryDiv.className = 'container new-entry hidden';
   var $entriesList = document.querySelector('.entries-list');
