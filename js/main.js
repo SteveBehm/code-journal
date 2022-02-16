@@ -28,6 +28,10 @@ function handleSubmit(event) {
   $form.reset();
   var $entry = newEntry(formObj);
   $unorderedList.appendChild($entry);
+  var $newEntryDiv = document.querySelector('.new-entry');
+  $newEntryDiv.className = 'container new-entry hidden';
+  var $entriesList = document.querySelector('.entries-list');
+  $entriesList.className = 'entries-list container';
 }
 
 function newEntry(entry) {
