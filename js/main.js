@@ -26,6 +26,8 @@ function handleSubmit(event) {
   data.entries.unshift(formObj);
   $image.setAttribute('src', 'images/placeholder-image-square.jpg');
   $form.reset();
+  var $entry = newEntry(formObj);
+  $unorderedList.appendChild($entry);
 }
 
 function newEntry(entry) {
