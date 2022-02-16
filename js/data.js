@@ -13,8 +13,9 @@ if (previousDataJSON !== null) {
   data = JSON.parse(previousDataJSON);
 }
 
-window.addEventListener('beforeunload', handleBeforeUnload);
 function handleBeforeUnload(event) {
-  var dataJSON = JSON.stringify(data);
-  localStorage.setItem('local-storage', dataJSON);
+  var localStorageData = JSON.stringify(data);
+  localStorage.setItem('local-storage', localStorageData);
 }
+
+window.addEventListener('beforeunload', handleBeforeUnload);

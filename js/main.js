@@ -16,6 +16,7 @@ function handleEntriesNavClick(event) {
   $newEntryDiv.className = 'container new-entry hidden';
   var $entriesList = document.querySelector('.entries-list');
   $entriesList.className = 'entries-list container';
+  data.view = 'entries';
 }
 
 var $newButton = document.querySelector('.new-button');
@@ -25,6 +26,7 @@ function handleNewClick(event) {
   $newEntryDiv.className = 'container new-entry';
   var $entriesList = document.querySelector('.entries-list');
   $entriesList.className = 'entries-list container hidden';
+  data.view = 'entry-form';
 }
 
 var $form = document.querySelector('form');
@@ -55,6 +57,7 @@ function handleSubmit(event) {
   $newEntryDiv.className = 'container new-entry hidden';
   var $entriesList = document.querySelector('.entries-list');
   $entriesList.className = 'entries-list container';
+  data.view = 'entries';
 }
 
 function newEntry(entry) {
@@ -88,7 +91,22 @@ function newEntry(entry) {
 
 var $unorderedList = document.querySelector('ul');
 
-for (var i = 0; i < data.entries.length; i++) {
-  var $entries = newEntry(data.entries[i]);
-  $unorderedList.appendChild($entries);
+function handleRefresh(event) {
+  var $entriesList = document.querySelector('.entries-list');
+  var $newEntryDiv = document.querySelector('.new-entry');
+
+  for (var i = 0; i < data.entries.length; i++) {
+    var $entries = newEntry(data.entries[i]);
+    $unorderedList.appendChild($entries);
+  }
+  if (data.view === 'entries') {
+    $newEntryDiv.className = 'container new-entry hidden';
+    $entriesList.className = 'entries-list container';
+    data.view = 'entries';
+  } else if (data.view === 'entry-form') {
+    $newEntryDiv.className = 'container new-entry';
+    $entriesList.className = 'entries-list container hidden';
+    data.view = 'entry-form';
+  }
 }
+window.addEventListener('DOMContentLoaded', handleRefresh);
