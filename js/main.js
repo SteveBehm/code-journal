@@ -128,10 +128,12 @@ function handleRefresh(event) {
 window.addEventListener('DOMContentLoaded', handleRefresh);
 
 function handleEditClick(event) {
-  // console.log('event.target', event.target);
-  // console.log('event.target.tagName', event.target.tagName);
-  // if (event.target && event.target.nodeName === 'I') {
-
-  // }
+  if (event.target && event.target.nodeName === 'I') {
+    var $entriesList = document.querySelector('.entries-list');
+    var $newEntryDiv = document.querySelector('.new-entry');
+    $newEntryDiv.className = 'container new-entry';
+    $entriesList.className = 'entries-list container hidden';
+    data.view = 'entry-form';
+  }
 }
 $unorderedList.addEventListener('click', handleEditClick);
