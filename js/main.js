@@ -135,5 +135,12 @@ function handleEditClick(event) {
     $entriesList.className = 'entries-list container hidden';
     data.view = 'entry-form';
   }
+  var $closestLi = event.target.closest('li');
+  var $closestLiId = parseInt($closestLi.getAttribute('data-entry-id'));
+  for (var i = 0; i < data.entries.length; i++) {
+    if ($closestLiId === data.entries[i].entryId) {
+      data.editing = data.entries[i];
+    }
+  }
 }
 $unorderedList.addEventListener('click', handleEditClick);
