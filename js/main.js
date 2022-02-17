@@ -197,3 +197,10 @@ function handleDeleteClick(event) {
   document.querySelector('.bg-modal').style.display = 'flex';
 }
 $deleteLink.addEventListener('click', handleDeleteClick);
+
+// Hide the modal if the user clicks cancel
+var $cancelClick = document.querySelector('.cancel-button');
+function handleCancelClick(event) {
+  document.querySelector('.bg-modal').style.display = 'none';
+}
+$cancelClick.addEventListener('click', handleCancelClick);
