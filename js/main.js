@@ -25,7 +25,22 @@ function handleNewClick(event) {
   $newEntryDiv.className = 'container new-entry';
   var $entriesList = document.querySelector('.entries-list');
   $entriesList.className = 'entries-list container hidden';
+
+  var $deleteEntry = document.querySelector('.delete-link');
+  var $deleteEntryDiv = document.querySelector('.save-button-space');
+  $deleteEntry.className = 'delete-link hidden';
+  $deleteEntryDiv.className = 'save-button column-full';
   data.view = 'entry-form';
+
+  // making the title of the page New Entry
+  var $newEntry = document.querySelector('h1');
+  $newEntry.textContent = 'New Entry';
+
+  // taking away the delete entry link
+  // var $deleteEntry = document.querySelector('.delete-link');
+  // var $deleteEntryDiv = document.querySelector('.save-button');
+  // $deleteEntry.className = 'delete-link hidden';
+  // $deleteEntryDiv.className = 'save-button column-full';
 }
 
 var $form = document.querySelector('form');
@@ -47,6 +62,8 @@ function handleSubmit(event) {
         $listItems[i].replaceWith(newEntry(data.editing));
       }
     }
+    $image.setAttribute('src', 'images/placeholder-image-square.jpg');
+    $form.reset();
   } else {
 
     var formObj = {};
@@ -148,8 +165,12 @@ function handleEditClick(event) {
   if (event.target && event.target.nodeName === 'I') {
     var $entriesList = document.querySelector('.entries-list');
     var $newEntryDiv = document.querySelector('.new-entry');
+    var $deleteEntry = document.querySelector('.delete-link');
+    var $deleteEntryDiv = document.querySelector('.save-button');
     $newEntryDiv.className = 'container new-entry';
     $entriesList.className = 'entries-list container hidden';
+    $deleteEntry.className = 'delete-link';
+    $deleteEntryDiv.className = 'save-button-space column-full';
     data.view = 'entry-form';
   }
   // find the matching entry object and assign it to the data model's
@@ -161,11 +182,20 @@ function handleEditClick(event) {
       data.editing = data.entries[i];
     }
   }
+
+  // Switching the title of the page to Edit Entry while Editing
+  var $newEntry = document.querySelector('h1');
+  $newEntry.textContent = 'Edit Entry';
+
   // pre-populate the entry form with the clicked entry's values
   // from the object found in the data model.
   $form.elements.title.value = data.editing.title;
   $form.elements.url.value = data.editing.photoAddress;
   $form.elements.notes.value = data.editing.notes;
   $image.setAttribute('src', data.editing.photoAddress);
+
+  // adding a click target for deleting an entry to the entry
+  // that only appears when editing.
+
 }
 $unorderedList.addEventListener('click', handleEditClick);

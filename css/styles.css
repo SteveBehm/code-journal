@@ -46,6 +46,11 @@ textarea {
   justify-content: right;
 }
 
+.save-button-space {
+  display: flex;
+  justify-content: space-between;
+}
+
 button {
   color: white;
   background-color: rgb(86 43 128);
@@ -95,4 +100,9 @@ ul {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+}
+
+.delete-link {
+  display: flex;
+  align-items: center;
 }
