@@ -39,7 +39,14 @@ function handleSubmit(event) {
     data.editing.title = $form.elements.title.value;
     data.editing.photoAddress = $form.elements.url.value;
     data.editing.notes = $form.elements.notes.value;
-
+    var $listItems = document.querySelectorAll('li');
+    for (var i = 0; i < $listItems.length; i++) {
+      var $listItemsId = $listItems[i].getAttribute('data-entry-id');
+      var $idInteger = parseInt($listItemsId);
+      if ($idInteger === data.editing.entryId) {
+        $listItems[i].replaceWith(newEntry(data.editing));
+      }
+    }
   } else {
 
     var formObj = {};
