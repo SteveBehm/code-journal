@@ -128,6 +128,7 @@ function handleRefresh(event) {
 window.addEventListener('DOMContentLoaded', handleRefresh);
 
 function handleEditClick(event) {
+  // if you click the edit button switch to the blank form view
   if (event.target && event.target.nodeName === 'I') {
     var $entriesList = document.querySelector('.entries-list');
     var $newEntryDiv = document.querySelector('.new-entry');
@@ -135,6 +136,8 @@ function handleEditClick(event) {
     $entriesList.className = 'entries-list container hidden';
     data.view = 'entry-form';
   }
+  // find the matching entry object and assign it to the data model's
+  // editing property if the icon was clicked.
   var $closestLi = event.target.closest('li');
   var $closestLiId = parseInt($closestLi.getAttribute('data-entry-id'));
   for (var i = 0; i < data.entries.length; i++) {
@@ -142,5 +145,11 @@ function handleEditClick(event) {
       data.editing = data.entries[i];
     }
   }
+  // pre-populate the entry form with the clicked entry's values
+  // from the object found in the data model.
+  $form.elements.title.value = data.editing.title;
+  $form.elements.url.value = data.editing.photoAddress;
+  $form.elements.notes.value = data.editing.notes;
+  $image.setAttribute('src', data.editing.photoAddress);
 }
 $unorderedList.addEventListener('click', handleEditClick);
