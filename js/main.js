@@ -204,3 +204,25 @@ function handleCancelClick(event) {
   document.querySelector('.bg-modal').style.display = 'none';
 }
 $cancelClick.addEventListener('click', handleCancelClick);
+
+// Remove the entry from the data model and the entry's DOM tree
+// from the page if the user clicks delete.
+var $confirmClick = document.querySelector('.confirm-button');
+function handleConfirmClick(event) {
+// splice the entry out of the data.entries array
+  for (var i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === data.editing.entryId) {
+      data.entries.splice(i, 1);
+
+    }
+  }
+  var $listItems = document.querySelectorAll('li');
+  for (var j = 0; j < $listItems.length; j++) {
+    var $listItemsId = $listItems[j].getAttribute('data-entry-id');
+    var $idInteger = parseInt($listItemsId);
+    if ($idInteger === data.editing.entryId) {
+      $listItems[i].remove();
+    }
+  }
+}
+$confirmClick.addEventListener('click', handleConfirmClick);
