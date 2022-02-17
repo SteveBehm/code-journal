@@ -25,7 +25,7 @@ function handleNewClick(event) {
   $newEntryDiv.className = 'container new-entry';
   var $entriesList = document.querySelector('.entries-list');
   $entriesList.className = 'entries-list container hidden';
-
+  // taking away the delete entry link
   var $deleteEntry = document.querySelector('.delete-link');
   var $deleteEntryDiv = document.querySelector('.save-button-space');
   $deleteEntry.className = 'delete-link hidden';
@@ -35,12 +35,6 @@ function handleNewClick(event) {
   // making the title of the page New Entry
   var $newEntry = document.querySelector('h1');
   $newEntry.textContent = 'New Entry';
-
-  // taking away the delete entry link
-  // var $deleteEntry = document.querySelector('.delete-link');
-  // var $deleteEntryDiv = document.querySelector('.save-button');
-  // $deleteEntry.className = 'delete-link hidden';
-  // $deleteEntryDiv.className = 'save-button column-full';
 }
 
 var $form = document.querySelector('form');
@@ -194,8 +188,12 @@ function handleEditClick(event) {
   $form.elements.notes.value = data.editing.notes;
   $image.setAttribute('src', data.editing.photoAddress);
 
-  // adding a click target for deleting an entry to the entry
-  // that only appears when editing.
-
 }
 $unorderedList.addEventListener('click', handleEditClick);
+
+// Confirmation modal when the user clicks delete entry
+var $deleteLink = document.querySelector('.delete-link');
+function handleDeleteClick(event) {
+  document.querySelector('.bg-modal').style.display = 'flex';
+}
+$deleteLink.addEventListener('click', handleDeleteClick);
