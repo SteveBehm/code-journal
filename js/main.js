@@ -33,25 +33,41 @@ $form.addEventListener('submit', handleSubmit);
 
 function handleSubmit(event) {
   event.preventDefault();
-  var formObj = {};
+  // update the entry form's submit handler function to conditionally
+  // add a new entry object or update the existing one.
+  if (data.editing !== null) {
+    data.editing.title = $form.elements.title.value;
+    data.editing.photoAddress = $form.elements.url.value;
+    data.editing.notes = $form.elements.notes.value;
+    var $listItems = document.querySelectorAll('li');
+    for (var i = 0; i < $listItems.length; i++) {
+      var $listItemsId = $listItems[i].getAttribute('data-entry-id');
+      var $idInteger = parseInt($listItemsId);
+      if ($idInteger === data.editing.entryId) {
+        $listItems[i].replaceWith(newEntry(data.editing));
+      }
+    }
+  } else {
 
-  var title = $form.elements.title.value;
-  var photoAddress = $form.elements.url.value;
-  var notes = $form.elements.notes.value;
+    var formObj = {};
 
-  formObj.title = title;
-  formObj.photoAddress = photoAddress;
-  formObj.notes = notes;
-  formObj.entryId = data.nextEntryId;
+    var title = $form.elements.title.value;
+    var photoAddress = $form.elements.url.value;
+    var notes = $form.elements.notes.value;
 
-  data.nextEntryId++;
-  data.entries.unshift(formObj);
-  $image.setAttribute('src', 'images/placeholder-image-square.jpg');
-  $form.reset();
+    formObj.title = title;
+    formObj.photoAddress = photoAddress;
+    formObj.notes = notes;
+    formObj.entryId = data.nextEntryId;
 
-  var $entry = newEntry(formObj);
-  $unorderedList.prepend($entry);
+    data.nextEntryId++;
+    data.entries.unshift(formObj);
+    $image.setAttribute('src', 'images/placeholder-image-square.jpg');
+    $form.reset();
 
+    var $entry = newEntry(formObj);
+    $unorderedList.prepend($entry);
+  }
   var $newEntryDiv = document.querySelector('.new-entry');
   $newEntryDiv.className = 'container new-entry hidden';
   var $entriesList = document.querySelector('.entries-list');
@@ -65,6 +81,7 @@ function handleSubmit(event) {
 function newEntry(entry) {
   var newListItem = document.createElement('li');
   newListItem.className = 'row';
+  newListItem.setAttribute('data-entry-id', entry.entryId);
 
   var imgDiv = document.createElement('div');
   imgDiv.className = 'column-half';
@@ -78,10 +95,18 @@ function newEntry(entry) {
   textHalf.className = 'column-half';
   newListItem.appendChild(textHalf);
 
+  var iconDiv = document.createElement('div');
+  iconDiv.className = 'edit-icon';
+  textHalf.appendChild(iconDiv);
+
   var entryTitle = document.createElement('h2');
   var entryTitleText = document.createTextNode(entry.title);
   entryTitle.appendChild(entryTitleText);
-  textHalf.appendChild(entryTitle);
+  iconDiv.appendChild(entryTitle);
+
+  var icon = document.createElement('i');
+  icon.className = 'fas fa-pencil-alt';
+  iconDiv.appendChild(icon);
 
   var firstPara = document.createElement('p');
   var firstParaText = document.createTextNode(entry.notes);
@@ -117,3 +142,30 @@ function handleRefresh(event) {
   }
 }
 window.addEventListener('DOMContentLoaded', handleRefresh);
+
+function handleEditClick(event) {
+  // if you click the edit button switch to the blank form view
+  if (event.target && event.target.nodeName === 'I') {
+    var $entriesList = document.querySelector('.entries-list');
+    var $newEntryDiv = document.querySelector('.new-entry');
+    $newEntryDiv.className = 'container new-entry';
+    $entriesList.className = 'entries-list container hidden';
+    data.view = 'entry-form';
+  }
+  // find the matching entry object and assign it to the data model's
+  // editing property if the icon was clicked.
+  var $closestLi = event.target.closest('li');
+  var $closestLiId = parseInt($closestLi.getAttribute('data-entry-id'));
+  for (var i = 0; i < data.entries.length; i++) {
+    if ($closestLiId === data.entries[i].entryId) {
+      data.editing = data.entries[i];
+    }
+  }
+  // pre-populate the entry form with the clicked entry's values
+  // from the object found in the data model.
+  $form.elements.title.value = data.editing.title;
+  $form.elements.url.value = data.editing.photoAddress;
+  $form.elements.notes.value = data.editing.notes;
+  $image.setAttribute('src', data.editing.photoAddress);
+}
+$unorderedList.addEventListener('click', handleEditClick);
