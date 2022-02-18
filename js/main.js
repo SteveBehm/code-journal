@@ -150,6 +150,9 @@ function handleRefresh(event) {
     var $noEntries = document.querySelector('.no-entries-para');
     $noEntries.className = 'no-entries-para hidden';
   }
+  var $deleteEntry = document.querySelector('.delete');
+  $deleteEntry.className = 'hidden delete';
+
 }
 window.addEventListener('DOMContentLoaded', handleRefresh);
 
@@ -161,7 +164,7 @@ function handleEditClick(event) {
     var $deleteEntry = document.querySelector('.delete');
     $newEntryDiv.className = 'container new-entry';
     $entriesList.className = 'entries-list container hidden';
-    $deleteEntry.className = '';
+    $deleteEntry.className = 'delete';
     data.view = 'entry-form';
   }
   // find the matching entry object and assign it to the data model's
@@ -214,6 +217,7 @@ function handleConfirmClick(event) {
 
     }
   }
+  // remove the entry from the DOM
   var $listItems = document.querySelectorAll('li');
   for (var j = 0; j < $listItems.length; j++) {
     var $listItemsId = $listItems[j].getAttribute('data-entry-id');
@@ -227,6 +231,12 @@ function handleConfirmClick(event) {
   var $newEntryDiv = document.querySelector('.new-entry');
   $newEntryDiv.className = 'container new-entry hidden';
   $entriesList.className = 'entries-list container';
+
+  // if there are no entries left show no entries
+  if (data.entries.length === 0) {
+    var $noEntries = document.querySelector('.no-entries-para');
+    $noEntries.className = 'no-entries-para';
+  }
 
   data.editing = null;
   $image.setAttribute('src', 'images/placeholder-image-square.jpg');
