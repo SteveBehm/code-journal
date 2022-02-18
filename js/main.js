@@ -27,9 +27,7 @@ function handleNewClick(event) {
   $entriesList.className = 'entries-list container hidden';
   // taking away the delete entry link
   var $deleteEntry = document.querySelector('.delete-link');
-  var $deleteEntryDiv = document.querySelector('.save-button-space');
   $deleteEntry.className = 'delete-link hidden';
-  $deleteEntryDiv.className = 'save-button column-full';
   data.view = 'entry-form';
 
   // making the title of the page New Entry
@@ -58,6 +56,7 @@ function handleSubmit(event) {
     }
     $image.setAttribute('src', 'images/placeholder-image-square.jpg');
     $form.reset();
+    data.editing = null;
   } else {
 
     var formObj = {};
@@ -159,12 +158,10 @@ function handleEditClick(event) {
   if (event.target && event.target.nodeName === 'I') {
     var $entriesList = document.querySelector('.entries-list');
     var $newEntryDiv = document.querySelector('.new-entry');
-    var $deleteEntry = document.querySelector('.delete-link');
-    var $deleteEntryDiv = document.querySelector('.save-button');
+    var $deleteEntry = document.querySelector('.delete');
     $newEntryDiv.className = 'container new-entry';
     $entriesList.className = 'entries-list container hidden';
-    $deleteEntry.className = 'delete-link';
-    $deleteEntryDiv.className = 'save-button-space column-full';
+    $deleteEntry.className = '';
     data.view = 'entry-form';
   }
   // find the matching entry object and assign it to the data model's
@@ -187,7 +184,6 @@ function handleEditClick(event) {
   $form.elements.url.value = data.editing.photoAddress;
   $form.elements.notes.value = data.editing.notes;
   $image.setAttribute('src', data.editing.photoAddress);
-
 }
 $unorderedList.addEventListener('click', handleEditClick);
 
@@ -209,7 +205,9 @@ $cancelClick.addEventListener('click', handleCancelClick);
 // from the page if the user clicks delete.
 var $confirmClick = document.querySelector('.confirm-button');
 function handleConfirmClick(event) {
-// splice the entry out of the data.entries array
+// remove the modal window
+  document.querySelector('.bg-modal').style.display = 'none';
+  // splice the entry out of the data.entries array
   for (var i = 0; i < data.entries.length; i++) {
     if (data.entries[i].entryId === data.editing.entryId) {
       data.entries.splice(i, 1);
@@ -221,8 +219,16 @@ function handleConfirmClick(event) {
     var $listItemsId = $listItems[j].getAttribute('data-entry-id');
     var $idInteger = parseInt($listItemsId);
     if ($idInteger === data.editing.entryId) {
-      $listItems[i].remove();
+      $listItems[j].remove();
     }
   }
+  // show the entries list if the user clicked confirm
+  var $entriesList = document.querySelector('.entries-list');
+  var $newEntryDiv = document.querySelector('.new-entry');
+  $newEntryDiv.className = 'container new-entry hidden';
+  $entriesList.className = 'entries-list container';
+
+  $image.setAttribute('src', 'images/placeholder-image-square.jpg');
+  $form.reset();
 }
 $confirmClick.addEventListener('click', handleConfirmClick);

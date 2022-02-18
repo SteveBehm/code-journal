@@ -46,9 +46,12 @@ textarea {
   justify-content: right;
 }
 
-.save-button-space {
+.column-link {
+  width: 50%;
+}
+
+.opposite-ends {
   display: flex;
-  justify-content: space-between;
 }
 
 button {
@@ -105,6 +108,7 @@ ul {
 .delete-link {
   display: flex;
   align-items: center;
+  justify-content: left;
 }
 
 /* modal styling */
