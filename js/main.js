@@ -228,6 +228,7 @@ function handleConfirmClick(event) {
   $newEntryDiv.className = 'container new-entry hidden';
   $entriesList.className = 'entries-list container';
 
+  data.editing = null;
   $image.setAttribute('src', 'images/placeholder-image-square.jpg');
   $form.reset();
 }
