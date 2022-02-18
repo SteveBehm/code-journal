@@ -25,7 +25,14 @@ function handleNewClick(event) {
   $newEntryDiv.className = 'container new-entry';
   var $entriesList = document.querySelector('.entries-list');
   $entriesList.className = 'entries-list container hidden';
+  // taking away the delete entry link
+  var $deleteEntry = document.querySelector('.delete-link');
+  $deleteEntry.className = 'delete-link hidden';
   data.view = 'entry-form';
+
+  // making the title of the page New Entry
+  var $newEntry = document.querySelector('h1');
+  $newEntry.textContent = 'New Entry';
 }
 
 var $form = document.querySelector('form');
@@ -47,6 +54,9 @@ function handleSubmit(event) {
         $listItems[i].replaceWith(newEntry(data.editing));
       }
     }
+    $image.setAttribute('src', 'images/placeholder-image-square.jpg');
+    $form.reset();
+    data.editing = null;
   } else {
 
     var formObj = {};
@@ -140,6 +150,9 @@ function handleRefresh(event) {
     var $noEntries = document.querySelector('.no-entries-para');
     $noEntries.className = 'no-entries-para hidden';
   }
+  var $deleteEntry = document.querySelector('.delete');
+  $deleteEntry.className = 'hidden delete';
+
 }
 window.addEventListener('DOMContentLoaded', handleRefresh);
 
@@ -148,8 +161,10 @@ function handleEditClick(event) {
   if (event.target && event.target.nodeName === 'I') {
     var $entriesList = document.querySelector('.entries-list');
     var $newEntryDiv = document.querySelector('.new-entry');
+    var $deleteEntry = document.querySelector('.delete');
     $newEntryDiv.className = 'container new-entry';
     $entriesList.className = 'entries-list container hidden';
+    $deleteEntry.className = 'delete';
     data.view = 'entry-form';
   }
   // find the matching entry object and assign it to the data model's
@@ -161,6 +176,11 @@ function handleEditClick(event) {
       data.editing = data.entries[i];
     }
   }
+
+  // Switching the title of the page to Edit Entry while Editing
+  var $newEntry = document.querySelector('h1');
+  $newEntry.textContent = 'Edit Entry';
+
   // pre-populate the entry form with the clicked entry's values
   // from the object found in the data model.
   $form.elements.title.value = data.editing.title;
@@ -169,3 +189,57 @@ function handleEditClick(event) {
   $image.setAttribute('src', data.editing.photoAddress);
 }
 $unorderedList.addEventListener('click', handleEditClick);
+
+// Confirmation modal when the user clicks delete entry
+var $deleteLink = document.querySelector('.delete-link');
+function handleDeleteClick(event) {
+  document.querySelector('.bg-modal').style.display = 'flex';
+}
+$deleteLink.addEventListener('click', handleDeleteClick);
+
+// Hide the modal if the user clicks cancel
+var $cancelClick = document.querySelector('.cancel-button');
+function handleCancelClick(event) {
+  document.querySelector('.bg-modal').style.display = 'none';
+}
+$cancelClick.addEventListener('click', handleCancelClick);
+
+// Remove the entry from the data model and the entry's DOM tree
+// from the page if the user clicks delete.
+var $confirmClick = document.querySelector('.confirm-button');
+function handleConfirmClick(event) {
+// remove the modal window
+  document.querySelector('.bg-modal').style.display = 'none';
+  // splice the entry out of the data.entries array
+  for (var i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === data.editing.entryId) {
+      data.entries.splice(i, 1);
+
+    }
+  }
+  // remove the entry from the DOM
+  var $listItems = document.querySelectorAll('li');
+  for (var j = 0; j < $listItems.length; j++) {
+    var $listItemsId = $listItems[j].getAttribute('data-entry-id');
+    var $idInteger = parseInt($listItemsId);
+    if ($idInteger === data.editing.entryId) {
+      $listItems[j].remove();
+    }
+  }
+  // show the entries list if the user clicked confirm
+  var $entriesList = document.querySelector('.entries-list');
+  var $newEntryDiv = document.querySelector('.new-entry');
+  $newEntryDiv.className = 'container new-entry hidden';
+  $entriesList.className = 'entries-list container';
+
+  // if there are no entries left show no entries
+  if (data.entries.length === 0) {
+    var $noEntries = document.querySelector('.no-entries-para');
+    $noEntries.className = 'no-entries-para';
+  }
+
+  data.editing = null;
+  $image.setAttribute('src', 'images/placeholder-image-square.jpg');
+  $form.reset();
+}
+$confirmClick.addEventListener('click', handleConfirmClick);
